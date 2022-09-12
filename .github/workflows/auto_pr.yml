@@ -33,13 +33,13 @@ jobs:
           delete-branch: true
           
       - name: Approve Pull Request1
-        uses: juliangruber/approve-pull-request-action@v1.x.x
+        uses: juliangruber/approve-pull-request-action@v1
         with:
           github-token: ${{ secrets.HOMELAB_TK }}
           number: ${{ steps.raise1.outputs.pull-request-number }}
 
       - name: Merge Pull request1
-        uses: juliangruber/merge-pull-request-action@v1.x.x
+        uses: juliangruber/merge-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.raise1.outputs.pull-request-number }}
