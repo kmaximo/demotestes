@@ -1,6 +1,9 @@
 name: Automatic PR
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   Auto_PR:
@@ -8,6 +11,8 @@ jobs:
     steps:
       - name: checking out code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: extract git commit data
         uses: rlespinasse/git-commit-data-action@v1.x
@@ -18,11 +23,13 @@ jobs:
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
+        
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          
       - name: Create or Update Project Card
         if: ${{ steps.cpr.outputs.pull-request-number }}
         uses: peter-evans/create-or-update-project-card@v2
