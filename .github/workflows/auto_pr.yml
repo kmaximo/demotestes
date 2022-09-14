@@ -1,9 +1,9 @@
-name: Demo to create automatic PR
+name: Automatic PR
 
 on: [push]
 
 jobs:
-  updateAuthor:
+  Auto_PR:
     runs-on: ubuntu-latest
     steps:
       - name: checking out code
@@ -15,39 +15,13 @@ jobs:
       - name: Update author information
         run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
 
-      - name: Raise PR
-        id: demo-1
-        uses: peter-evans/create-pull-request@v3
-        with:
-          branch: "auto-pr-branch"
-          base: main
-          title: "demo for auto pr"
-          committer: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
-          author: ${{ env.GIT_COMMIT_AUTHOR_NAME }} <${{ env.GIT_COMMIT_AUTHOR_EMAIL }}">
-          body:
-            This is to show automatic PR creation
-          token: ${{ secrets.GITHUB_TOKEN }}
-          delete-branch: false
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+      - name: Check outputs
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+
           
-      - name: Find Pull Request
-        uses: juliangruber/find-pull-request-action@v1
-        id: find-pull-request
-        with:
-          branch: main
-      - run: echo "Pull Request ${number} (${sha})"
-        env:
-          number: ${{ steps.find-pull-request.outputs.number }}
-          sha: ${{ steps.find-pull-request.outputs.head-sha }}          
-
-      - name: Approve Pull Request
-        uses: juliangruber/approve-pull-request-action@v1
-        with:
-          github-token: ${{ secrets.HOMELAB_TK }}
-          number: ${{ steps.demo-1.outputs.pull-request-number }}
-
-      - name: Merge Pull request
-        uses: juliangruber/merge-pull-request-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.demo-1.outputs.pull-request-number }}
-          method: squash
