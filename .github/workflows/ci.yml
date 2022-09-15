@@ -21,12 +21,12 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.HOMELAB_TK }}
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v2
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.HOMELAB_TK }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
