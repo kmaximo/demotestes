@@ -1,2 +1,32 @@
-- name: Enable Pull Request Automerge
-  uses: peter-evans/enable-pull-request-automerge@v2.2.0
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - run: npm run build
+      - run: npm run format-check
+      - run: npm run lint
+      - run: npm run test
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+      - uses: actions/upload-artifact@v3
+        with:
+          name: action.yml
+          path: action.yml
