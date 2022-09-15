@@ -3,39 +3,24 @@ name: Automatic PR
 on:
   push:
     branches:
-      - main
+    - dev
 
 jobs:
-  Auto_PR:
+  pull-request:
     runs-on: ubuntu-latest
     steps:
-      - name: checking out code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: extract git commit data
-        uses: rlespinasse/git-commit-data-action@v1.x
-
-      - name: Update author information
-        run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
-
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v4
-        
-      - name: Check outputs
-        if: ${{ steps.cpr.outputs.pull-request-number }}
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
-          
-      - name: Create or Update Project Card
-        if: ${{ steps.cpr.outputs.pull-request-number }}
-        uses: peter-evans/create-or-update-project-card@v2
-        with:
-          project-name: My project
-          column-name: My column
-          issue-number: ${{ steps.cpr.outputs.pull-request-number }}
+    - uses: actions/checkout@v2
+    - name: pull-request
+      id: open-pr
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: "main"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: output-url
+      run: echo ${{steps.open-pr.outputs.pr_url}}
+    - name: output-number
+      run: echo ${{steps.open-pr.outputs.pr_number}}
+    - name: output-has-changed-files
+      run: echo ${{steps.open-pr.outputs.has_changed_files}}
 
           
