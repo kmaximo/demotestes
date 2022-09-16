@@ -28,8 +28,8 @@ jobs:
           labels: |
             report
             automated pr
-          assignees: peter-evans
-          reviewers: peter-evans
+          assignees: kmaximo
+          reviewers: kmaximo
           milestone: 1
           draft: false
           branch: example-patches
