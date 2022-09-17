@@ -34,6 +34,7 @@ jobs:
   pr-extra:
       needs:
         - open-pr-to-main
+      runs-on: ubuntu-latest
       steps:
       - name: Find Pull Request
         uses: juliangruber/find-pull-request-action@v1
