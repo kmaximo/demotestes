@@ -30,10 +30,11 @@ jobs:
       run: echo ${{steps.open-pr.outputs.pr_number}}
     - name: output-has-changed-files
       run: echo ${{steps.open-pr.outputs.has_changed_files}}
-  
+
   pr-extra:
       needs:
         - open-pr-to-main
+      steps:
       - name: Find Pull Request
         uses: juliangruber/find-pull-request-action@v1
         id: find-pull-request
