@@ -33,7 +33,7 @@ jobs:
   
   pr-extra:
       needs:
-        - pull-request
+        - open-pr-to-main
       - name: Find Pull Request
         uses: juliangruber/find-pull-request-action@v1
         id: find-pull-request
