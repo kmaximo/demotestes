@@ -31,15 +31,16 @@ jobs:
     - name: output-has-changed-files
       run: echo ${{steps.open-pr.outputs.has_changed_files}}
 
-  pr-extra:
-      needs:
-        - open-pr-to-main
-      runs-on: ubuntu-latest
-      steps:
-      - name: Approve Pull Request
-        uses: juliangruber/approve-pull-request-action@v1.1.1
-        #with:
-          #github-token: ${{ secrets.GITHUB_TOKEN }}
-          #number: ${{steps.pen-pr-to-main.open-pr.outputs.pr_number}}
-      - name: output-number
-        run: echo ${{steps.pen-pr-to-main.open-pr.outputs.pr_number}}
+
+  automate-pullrequest-review:
+    needs:
+      - open-pr-to-main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Approve pull request
+        if: github.actor == 'github-actions'
+        uses: andrewmusgrave/automatic-pull-request-review@0.0.5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          event: APPROVE
+          body: 'Teste'
