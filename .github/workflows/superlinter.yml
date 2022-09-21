@@ -1,6 +1,9 @@
-name: Super-Linter
+name: 1 - Super-Linter
 
-on: push
+on:   
+  push:
+    branches: 
+      - 'dev**'
 
 jobs:
   super-lint:
@@ -17,4 +20,4 @@ jobs:
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.HOMELAB_TK }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
