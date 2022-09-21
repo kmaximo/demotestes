@@ -37,12 +37,10 @@ jobs:
       - open-pr-to-main
     runs-on: ubuntu-latest
     steps:
-    - name: Find Pull Request
-      uses: juliangruber/find-pull-request-action@v1.6.0
-      id: find-pull-request
-      with:
-        branch: main
-    - run: echo "Pull Request ${number} "
-      env:
-        number: ${{ steps.find-pull-request.outputs.number }}
+    - name: output-url
+      run: echo ${{steps.open-pr.outputs.pr_url}}
+    - name: output-number
+      run: echo ${{steps.open-pr.outputs.pr_number}}
+    - name: output-has-changed-files
+      run: echo ${{steps.open-pr.outputs.has_changed_files}}
         
