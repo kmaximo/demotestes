@@ -15,7 +15,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          branch: dev
+          branch: dev/1
           labels: auto-pr
           assignees: kmaximo
           reviewers: kmaximo
