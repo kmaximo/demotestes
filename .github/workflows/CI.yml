@@ -31,20 +31,23 @@ jobs:
       - name: output-has-changed-files
         run: echo ${{steps.open-pr.outputs.has_changed_files}}
 
-      - name: Approve Pull Request
-        uses: juliangruber/approve-pull-request-action@v1.1.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{steps.open-pr.outputs.pr_number}}
-          repo: juliangruber/approve-pull-request-action # optional
+    #  - name: Approve Pull Request
+    #    uses: juliangruber/approve-pull-request-action@v1.1.1
+    #    with:
+    #      github-token: ${{ secrets.GITHUB_TOKEN }}
+    #      number: ${{steps.open-pr.outputs.pr_number}}
 
 
   automate-pullrequest:
     needs:
       - open-pr-to-main
     runs-on: ubuntu-latest
+    if: ${{ github.actor == 'github-actions[bot]' }}
     steps:
-      - name: output-url
-        run: echo ${{steps.open-pr.outputs.pr_url}}
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
          
