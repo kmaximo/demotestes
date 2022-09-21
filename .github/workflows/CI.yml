@@ -44,5 +44,5 @@ jobs:
         branch: main
     - run: echo "Pull Request ${number} "
       env:
-        number: ${{steps.open-pr.outputs.pr_number}}
+        number: ${{ steps.find-pull-request.outputs.number }}
         
