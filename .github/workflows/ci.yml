@@ -23,8 +23,6 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-pull-request
           labels: "auto-pr"
-          assignees: "kmaximo"
-          reviewers: "kmaximo"
           draft: false
       
       - name: output-url
