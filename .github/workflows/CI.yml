@@ -38,11 +38,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Find Pull Request
-      uses: juliangruber/find-pull-request-action@v1
+      uses: juliangruber/find-pull-request-action@v1.x
       id: find-pull-request
       with:
         branch: main
-    - run: echo "Pull Request ${number})"
+    - run: echo "Pull Request ${number} "
       env:
         number: ${{steps.open-pr.outputs.pr_number}}
         
