@@ -1,4 +1,4 @@
-name: Create Pull Request Example Command
+name: Create Pull Request
 on:
   push:
     branches: 
@@ -32,14 +32,17 @@ jobs:
       run: echo ${{steps.open-pr.outputs.has_changed_files}}
 
 
-  automate-pullrequest-review:
+  automate-pullrequest:
     needs:
       - open-pr-to-main
     runs-on: ubuntu-latest
     steps:
-      - name: Approve pull request
-        uses: andrewmusgrave/automatic-pull-request-review@0.0.5
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          event: APPROVE
-          body: 'Teste'
+    - name: Find Pull Request
+      uses: juliangruber/find-pull-request-action@v1.6.0
+      id: find-pull-request
+      with:
+        branch: main
+    - run: echo "Pull Request ${number} "
+      env:
+        number: ${{ steps.find-pull-request.outputs.number }}
+        
