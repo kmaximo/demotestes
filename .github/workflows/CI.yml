@@ -44,10 +44,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'github-actions[bot]' }}
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.1.1
+      - name: Auto reviews branches
+        uses: golfzaptw/action-auto-reviews-from-branches@master
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          EVENT_TYPE: APPROVE
+          BRANCHES: dev*
+          AUTHOR: 'kmcosta'
+          MESSAGE: Nice approve from github bot.
          
