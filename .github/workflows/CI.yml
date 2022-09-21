@@ -1,4 +1,4 @@
-name: Create Pull Request Example Command
+name: Create Pull Request
 on:
   push:
     branches: 
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Find Pull Request
-      uses: juliangruber/find-pull-request-action@v1.x
+      uses: juliangruber/find-pull-request-action@v1.6.0
       id: find-pull-request
       with:
         branch: main
