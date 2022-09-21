@@ -36,7 +36,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{steps.open-pr.outputs.pr_number}}
-          repo: juliangruber/approve-pull-request-action # optional
 
 
   automate-pullrequest:
