@@ -8,10 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Make changes to pull request
-        run: date +%s > report.txt
-
+      
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
@@ -34,16 +31,18 @@ jobs:
           reviewers: kmaximo
           milestone: 1
           draft: false
-          branch: main
+          #branch: main
           delete-branch: false
 
       - name: Check output
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
-      - name: Add reaction
-        uses: peter-evans/create-or-update-comment@v2
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v2
         with:
-          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
-          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
-          reaction-type: hooray
+          token: ${{ secrets.PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
