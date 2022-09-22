@@ -14,7 +14,13 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: main
+          labels: auto-pr
+          assignees: kmaximo
+          reviewers: kmaximo
+          draft: false              
       
       - name: output-url
         run: echo ${{steps.cpr.outputs.pull-request-url}}
