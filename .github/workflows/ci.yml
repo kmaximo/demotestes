@@ -12,22 +12,9 @@ jobs:
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: false
-          branch: main
-          labels: auto-pr
-          assignees: kmaximo
-          reviewers: kmaximo
-          draft: false              
-      
-      - name: output-url
-        run: echo ${{steps.cpr.outputs.pull-request-url}}
-      - name: output-number
-        run: echo ${{steps.cpr.outputs.pull-request-number}}
-      - name: output-has-changed-files
-        run: echo ${{steps.cpr.outputs.pull-request-operation}}
-      - name: output-has-changed-files
-        run: echo ${{steps.cpr.outputs.pull-request-head-sha}}
+      - name: Check outputs
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
 
