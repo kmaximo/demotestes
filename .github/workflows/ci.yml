@@ -31,7 +31,7 @@ jobs:
           reviewers: kmaximo
           milestone: 1
           draft: false
-          #branch: main
+          branch: main
           delete-branch: false
 
       - name: Check output
